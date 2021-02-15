@@ -25,22 +25,22 @@
 </head>
 <body>
 <div id="app" class="container">
-    <input v-model="name.firstName"/>
-    <input v-model="name.lastName"/>
-    <span>{{fullName}}</span>
-    <span>person age:</span>
-    <input v-model="person.age"/>
+    firstName:
+    <input v-model="person.name.firstName"/>
+    lastName:
+    <input v-model="person.name.lastName"/>
+    age:
+    <input v-model="person.age" type="number"/>
     <span>{{person}}</span>
 </div>
 <script>
     const {createApp, ref, watch, reactive} = Vue
-    const name = reactive({
-        firstName: '',
-        lastName: ''
-    })
-
     const person = reactive({
-        name: "tome",
+        name: {
+            firstName: '',
+            lastName: '',
+            fullName: ''
+        },
         age: 19
     })
     let fullName = ref('')
@@ -48,19 +48,15 @@
     const app = {
         setup() {
             // n1,p1 当前值, p2,n2为旧值；当是对象引用类型时，n1 与 n2，p1与p2 是同一个对象
-            watch([name, person], ([n1, p1], [n2, p2]) => {
-                fullName.value = name.firstName + name.lastName
+            watch(person, (n1, n2) => {
+                person.name.fullName = person.name.firstName + person.name.lastName
                 console.info(fullName.value)
                 console.info("n1: %s, n2: %s", n1, n2)
                 console.info(n1)
                 console.info(n2)
-                console.info(p1)
-                console.info(p2)
             })
 
             return {
-                name,
-                fullName,
                 person
             }
         }
