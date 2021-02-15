@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="vue.3.0.0-beta.17.js"></script>
+    <style>
+        .container {
+            width: 360px;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 50%;
+            height: 24px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            height: 24px;
+            width: 120px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    v-on:click 事件绑定 event信息输出控制台
+    // v-on:click="onClick"
+    <div @click="onClick">
+        {{message}}
+    </div>
+
+    v-for 数组及对象的循环
+    <ul>
+        <li v-for="(item,index) in books">
+            {{item}}-{{index}}
+        </li>
+    </ul>
+
+    表单项数据双向绑定、type及.number(.lazy.trim)修饰符的使用
+    <input type="number" v-model.number="count"/>
+    <span v-text="count"></span>
+    <button @click="onClick" type="button">显示当前count值</button>
+
+    <input type="number" v-model="person.age">
+    v-bind 绑定到表单控件
+    <input :value="age"/>
+
+    v-text 绑定标签
+    <span v-text="age"></span>
+
+    v-html 支持 html 标签
+    <span v-html="html"></span>
+
+    单向绑定
+    <div>{{number}}</div>
+    <button type="button" @click="onIncrement">number++</button>
+</div>
+<script>
+    const {createApp, ref, reactive} = Vue
+    const message = "hello, world!"
+    const books = ["book1", "book2", "book3"]
+    const age = 18
+    const html = "<li/>"
+    const person = reactive({
+        name: "tom",
+        age: 19
+    })
+    const app = {
+        setup() {
+            let number =ref(0);
+            const count = ref(99);
+            console.info(count);
+
+            function onClick(event) {
+                alert("count:" + count.value + "\n" + "age: " + person.age);
+                console.info(event)
+            }
+            function onIncrement(){
+                number.value++
+                console.info(number.value)
+            }
+            return {
+                message,
+                onClick,
+                books,
+                count,
+                age,
+                html,
+                person,
+                number,
+                onIncrement
+            }
+        }
+    }
+    createApp(app).mount('#app')
+</script>
+</body>
+</html>

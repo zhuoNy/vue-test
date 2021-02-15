@@ -1,0 +1,60 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="vue.3.0.0-beta.17.js"></script>
+    <style>
+        .container {
+            width: 360px;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 50%;
+            height: 24px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            height: 24px;
+            width: 120px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <input v-model="name.firstName"/>
+    <input v-model="name.lastName"/>
+    <span>{{fullName}}</span>
+</div>
+<script>
+    const {createApp, ref, watch, reactive} = Vue
+    const name = reactive({
+        firstName: '',
+        lastName: ''
+    })
+    let fullName = ref('')
+
+    const app = {
+        setup() {
+            // n1新值, n2旧值；当是对象引用类型时，n1 与 n2 是同一个对象
+            watch(name, (n1, n2) => {
+                fullName.value = name.firstName + name.lastName
+                console.info(fullName.value)
+                // console.info("n1: %s, n2: %s", n1.firstName, n2.firstName)
+                // console.info(n1)
+                // console.info(n2)
+            })
+
+            return {
+                name,
+                fullName
+            }
+        }
+    }
+    createApp(app).mount('#app')
+</script>
+</body>
+</html>
