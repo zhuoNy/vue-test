@@ -40,21 +40,21 @@
 
     const app = {
         setup() {
-            return {
-                firstName,
-                lastName
-            }
-        },
-        computed: {
-            fullName: {
+            const fullName = computed({
                 get() {
                     return firstName.value + ' ' + lastName.value
                 },
-                set(new1) {
-                    const names = new1.split(' ')
+                // 可重新对计算属性进行赋值计算
+                set(val) {
+                    const names = val.split(' ')
                     firstName.value = names[0]
                     lastName.value = names[names.length - 1]
                 }
+            })
+            return {
+                firstName,
+                lastName,
+                fullName
             }
         }
     }
