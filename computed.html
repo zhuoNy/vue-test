@@ -1,0 +1,58 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="vue.3.0.0-beta.17.js"></script>
+    <style>
+        .container {
+            width: 360px;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 50%;
+            height: 24px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            height: 24px;
+            width: 120px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    firstName:
+    <input v-model="firstName"/>
+    lastName:
+    <input v-model="lastName"/>
+    fullName:
+    <span>{{fullName}}</span>
+</div>
+<script>
+    const {createApp, ref, watch, reactive, computed} = Vue
+    const firstName = ref('first')
+    const lastName = ref('last')
+
+    // let fullName = ref('')
+
+    const app = {
+        setup() {
+            return {
+                firstName,
+                lastName
+            }
+        },
+        computed: {
+            fullName() {
+                return firstName.value + ' ' + lastName.value
+            }
+        }
+    }
+    createApp(app).mount('#app')
+</script>
+</body>
+</html>
