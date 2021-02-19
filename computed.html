@@ -30,20 +30,31 @@
     lastName:
     <input v-model="lastName"/>
     fullName:
-    <span>{{fullName}}</span>
+    <!--    <span>{{fullName}}</span>-->
+    <input v-model="fullName">
 </div>
 <script>
     const {createApp, ref, watch, reactive, computed} = Vue
-    const firstName = ref('first')
-    const lastName = ref('last')
+    let firstName = ref('first')
+    let lastName = ref('last')
 
     const app = {
         setup() {
-            const fullName = computed(() => firstName.value + ' ' + lastName.value)
             return {
                 firstName,
-                lastName,
-                fullName
+                lastName
+            }
+        },
+        computed: {
+            fullName: {
+                get() {
+                    return firstName.value + ' ' + lastName.value
+                },
+                set(new1) {
+                    const names = new1.split(' ')
+                    firstName.value = names[0]
+                    lastName.value = names[names.length - 1]
+                }
             }
         }
     }
