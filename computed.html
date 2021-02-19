@@ -37,18 +37,13 @@
     const firstName = ref('first')
     const lastName = ref('last')
 
-    // let fullName = ref('')
-
     const app = {
         setup() {
+            const fullName = computed(() => firstName.value + ' ' + lastName.value)
             return {
                 firstName,
-                lastName
-            }
-        },
-        computed: {
-            fullName() {
-                return firstName.value + ' ' + lastName.value
+                lastName,
+                fullName
             }
         }
     }
