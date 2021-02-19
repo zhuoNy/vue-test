@@ -47,7 +47,7 @@
 
     const app = {
         setup() {
-            // n1,p1 当前值, p2,n2为旧值；当是对象引用类型时，n1 与 n2，p1与p2 是同一个对象
+            //n1 为新值，n2为旧值
             watch(person, (n1, n2) => {
                 person.name.fullName = person.name.firstName + person.name.lastName
                 console.info(fullName.value)
