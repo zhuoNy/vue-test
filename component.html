@@ -1,0 +1,67 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="vue.3.0.0-beta.17.js"></script>
+    <style>
+        .container {
+            width: 360px;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 50%;
+            height: 24px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            height: 24px;
+            width: 120px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <ul>
+        <todo-list v-for="todo in todos" :id="todo.id" v-bind:title="todo.title"
+                   v-on:enlarge-text="onEnlargeText"></todo-list>
+    </ul>
+</div>
+<script>
+    const {createApp, ref, watch, reactive, computed} = Vue
+    const todos = [
+        {"id": 1, "title": "read book"},
+        {"id": 2, "title": "do work"},
+        {"id": 3, "title": "hand rest"}
+    ]
+    const app = {
+        setup() {
+            return {
+                todos,
+            }
+        },
+        methods: {
+            onEnlargeText(id) {
+                alert('click at: ' + id)
+            }
+        }
+
+    }
+    const vm = createApp(app)
+    vm.component('todo-list', {
+        props: [
+            'id',
+            'title',
+        ],
+        emits: [
+            'enlarge-text'
+        ],
+        template: `<li @click="$emit('enlarge-text',id)">{{id}}. {{ title }}</li>`
+    })
+    vm.mount('#app')
+</script>
+</body>
+</html>
